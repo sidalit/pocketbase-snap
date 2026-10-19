@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+
+exec "$SNAP/bin/pocketbase-cli" serve --http="$(snapctl get address)"

@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+umask 077
+mkdir -p "$SNAP_COMMON/pb_data" "$SNAP_COMMON/pb_hooks" \
+  "$SNAP_COMMON/pb_migrations" "$SNAP_COMMON/pb_public"
+cd "$SNAP_COMMON"
+
+exec "$SNAP/bin/pocketbase" \
+  --dir="$SNAP_COMMON/pb_data" \
+  --hooksDir="$SNAP_COMMON/pb_hooks" \
+  --migrationsDir="$SNAP_COMMON/pb_migrations" \
+  --publicDir="$SNAP_COMMON/pb_public" "$@"
