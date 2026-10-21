@@ -63,7 +63,7 @@ Dashboard backups cover `pb_data`; back up hooks, migrations and static files se
 
 ## Update to a new upstream release
 
-Change `source-tag` in `snap/snapcraft.yaml`, then rebuild. The version is taken from the tag.
+Change `version` in `snap/snapcraft.yaml`, then rebuild.
 
 ## Automation
 
