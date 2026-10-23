@@ -24,8 +24,12 @@ license: MIT
 grade: stable
 confinement: strict
 website: https://pocketbase.io
-source-code: https://github.com/pocketbase/pocketbase
-issues: https://github.com/pocketbase/pocketbase/issues
+source-code:
+  - https://github.com/pocketbase/pocketbase
+  - https://github.com/sidalit/pocketbase-snap
+issues:
+  - https://github.com/pocketbase/pocketbase/issues
+  - https://github.com/sidalit/pocketbase-snap/issues
 contact: https://github.com/sidalit/pocketbase-snap/issues
 
 platforms:
