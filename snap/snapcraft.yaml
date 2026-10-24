@@ -1,6 +1,6 @@
 name: pocketbase
 base: core26
-version: '0.40.5'
+version: '0.40.6'
 title: PocketBase
 summary: Backend with an embedded database, authentication and file storage
 description: |
