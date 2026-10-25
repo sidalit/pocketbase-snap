@@ -1,74 +1,80 @@
-# PocketBase snap
+<div align="center">
+
+<img src="snap/gui/pocketbase.png" alt="PocketBase logo" width="128" />
+
+# PocketBase
+
+**A realtime backend in one application.**
 
 [![pocketbase](https://snapcraft.io/pocketbase/badge.svg)](https://snapcraft.io/pocketbase)
+[![Base: core26](https://img.shields.io/badge/Base-core26-2C8C3C?logo=canonical&logoColor=white)](https://snapcraft.io/core26)
+![Confinement: strict](https://img.shields.io/badge/Confinement-strict-2C8C3C)
+[![Maintainer: sidaliteir](https://img.shields.io/badge/Maintainer-sidaliteir-2C8C3C?logo=snapcraft&logoColor=white)](https://snapcraft.io/publisher/sidaliteir)
+![Architectures: amd64 and arm64](https://img.shields.io/badge/Architectures-amd64%20%7C%20arm64-2C8C3C?logo=linux&logoColor=white)
 
-Snap packaging for [PocketBase](https://github.com/pocketbase/pocketbase), a backend with SQLite, authentication, file storage and a web dashboard.
+[Getting Started](#getting-started) · [Configure](#configure) · [Limitations](#limitations) · [Build](#build) · [Support](#support) · [License](#license)
 
-Unofficial build, not affiliated with or endorsed by the PocketBase project.
+Unofficial snap packaging for [PocketBase](https://github.com/pocketbase/pocketbase), a backend with a database, authentication, file storage and an admin dashboard.
 
-## Build
+</div>
 
-```bash
-snapcraft pack
-```
+---
 
-## Install and try
+## Getting Started
 
 <a href="https://snapcraft.io/pocketbase"><img alt="Get it from the Snap Store" src="https://snapcraft.io/en/dark/install.svg" width="180"></a>
 
 ```bash
-sudo snap install ./pocketbase_*.snap --dangerous
-sudo pocketbase superuser create admin@example.com 'your-password'
+sudo snap install pocketbase
+sudo pocketbase superuser create admin@example.com 'your-strong-password'
 ```
 
-After publication, install from the Store with `sudo snap install pocketbase`.
+Use your own email and password, then open [http://127.0.0.1:8090/_/](http://127.0.0.1:8090/_/). The service starts automatically. Create the superuser before exposing it to your network.
 
-The service starts right away and listens on `127.0.0.1:8090`. Open http://localhost:8090/_/ and sign in.
+## Configure
 
-## Background service
-
-```bash
-sudo snap logs pocketbase       # view logs
-sudo snap restart pocketbase    # restart
-sudo snap stop --disable pocketbase
-sudo snap start --enable pocketbase
-```
-
-### Settings
-
-| Setting | Default | Description |
-|---|---|---|
-| `address` | `127.0.0.1:8090` | Address and port to listen on |
-
-Changes restart a running service. Use `snap unset pocketbase address` to restore the default.
+| Setting | Accepted values | Default |
+| --- | --- | --- |
+| `address` | `host:port` or `[IPv6]:port`; port `1`–`65535` | `127.0.0.1:8090` |
 
 ```bash
 sudo snap get pocketbase
 sudo snap set pocketbase address=0.0.0.0:8090
 ```
 
-Create the administrator before opening the service to your network. For access from the internet, use a reverse proxy with HTTPS. Other settings, including SMTP, are managed in the dashboard.
+Changes restart the running service. `sudo snap unset pocketbase address` restores the default. Use an HTTPS reverse proxy for internet access. Configure SMTP and other application settings in the dashboard.
 
-## Data and backups
+Data lives under `/var/snap/pocketbase/common`:
 
-Data, hooks, migrations and static files are stored in `/var/snap/pocketbase/common/`, under `pb_data`, `pb_hooks`, `pb_migrations` and `pb_public`.
+| Directory | Contents |
+| --- | --- |
+| `pb_data` | Database and uploaded files |
+| `pb_hooks` | JavaScript hooks |
+| `pb_migrations` | Database migrations |
+| `pb_public` | Static website files |
 
-Dashboard backups cover `pb_data`; back up hooks, migrations and static files separately. Stop the service before copying its data. Back up before upgrading: `snap revert` does not restore data or undo migrations.
+Dashboard backups cover `pb_data` only. Back up the other directories separately; stop the service before copying its data manually.
 
-## Known limitations
+## Limitations
 
 - Email requires SMTP; host `sendmail` is unavailable.
-- Hooks cannot freely access host files or programs.
-- Updates use snapd; the upstream self-update command is removed.
+- Hooks can only access files and programs allowed by strict confinement.
+- Updates come through snapd. Back up before upgrading: `snap revert` does not undo database migrations or restore shared data.
 
-## Update to a new upstream release
+## Build
 
-Change `version` in `snap/snapcraft.yaml`, then rebuild.
+```bash
+git clone https://github.com/sidalit/pocketbase-snap.git
+cd pocketbase-snap
+sudo snap install snapcraft --classic
+snapcraft pack
+```
 
-## Automation
+## Support
 
-Builds, publishing, and dependency updates use [snap-automation](https://github.com/sidalit/snap-automation).
+- **Installation or snap issues:** [open a packaging issue](https://github.com/sidalit/pocketbase-snap/issues).
+- **Application bugs:** [report them upstream](https://github.com/pocketbase/pocketbase/issues).
 
 ## License
 
-The packaging is MIT-licensed (see `LICENSE`). PocketBase is MIT-licensed; its dependencies carry their own licenses.
+Snap packaging: [MIT](https://github.com/sidalit/pocketbase-snap/blob/main/LICENSE).
