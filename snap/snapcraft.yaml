@@ -1,6 +1,6 @@
 name: pocketbase
 base: core26
-version: '0.40.6'
+version: '0.41.0'
 title: PocketBase
 icon: snap/gui/pocketbase.png
 summary: Backend with an embedded database, authentication and file storage
@@ -26,10 +26,10 @@ grade: stable
 confinement: strict
 website: https://pocketbase.io
 source-code:
-  - https://github.com/pocketbase/pocketbase
+  - https://ganigeorgiev.com/pocketbase/pocketbase
   - https://github.com/sidalit/pocketbase-snap
 issues:
-  - https://github.com/pocketbase/pocketbase/issues
+  - https://ganigeorgiev.com/pocketbase/discussions?category=Bugs
   - https://github.com/sidalit/pocketbase-snap/issues
 contact: https://github.com/sidalit/pocketbase-snap/issues
 
@@ -54,7 +54,8 @@ apps:
 parts:
   pocketbase:
     plugin: nil
-    source: https://github.com/pocketbase/pocketbase.git
+    source: https://ganigeorgiev.com/git/pocketbase/pocketbase
+    source-type: git
     source-tag: v$SNAPCRAFT_PROJECT_VERSION
     build-snaps:
       - go/1.27/stable
@@ -65,12 +66,15 @@ parts:
       - GOTOOLCHAIN: local
     override-build: |
       # The installed executable is read-only; updates are managed by snapd.
-      sed -i '\|"github.com/pocketbase/pocketbase/plugins/ghupdate"|d; /ghupdate.MustRegister(app, app.RootCmd, ghupdate.Config{})/d' examples/base/main.go
+      sed -i \
+        -e '\|"ganigeorgiev.com/pocketbase/pocketbase/plugins/update"|d' \
+        -e '/^[[:space:]]*update\.MustRegister(/,/^[[:space:]]*})[[:space:]]*$/d' \
+        examples/base/main.go
 
       # Upstream commits the dashboard in ui/dist and embeds it in this binary.
       mkdir -p "$CRAFT_PART_INSTALL/bin"
       go build -trimpath \
-        -ldflags "-s -w -X github.com/pocketbase/pocketbase.Version=$(craftctl get version)" \
+        -ldflags "-s -w -X ganigeorgiev.com/pocketbase/pocketbase.Version=$(craftctl get version)" \
         -o "$CRAFT_PART_INSTALL/bin/pocketbase" ./examples/base
       install -Dm644 LICENSE.md "$CRAFT_PART_INSTALL/share/doc/pocketbase/LICENSE"
 

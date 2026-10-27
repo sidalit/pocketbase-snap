@@ -14,7 +14,7 @@
 
 [Getting Started](#getting-started) · [Configure](#configure) · [Limitations](#limitations) · [Build](#build) · [Support](#support) · [License](#license)
 
-Unofficial snap packaging for [PocketBase](https://github.com/pocketbase/pocketbase), a backend with a database, authentication, file storage and an admin dashboard.
+Unofficial snap packaging for [PocketBase](https://ganigeorgiev.com/pocketbase/pocketbase), a backend with a database, authentication, file storage and an admin dashboard.
 
 </div>
 
@@ -73,7 +73,7 @@ snapcraft pack
 ## Support
 
 - **Installation or snap issues:** [open a packaging issue](https://github.com/sidalit/pocketbase-snap/issues).
-- **Application bugs:** [report them upstream](https://github.com/pocketbase/pocketbase/issues).
+- **Application bugs:** [report them upstream](https://ganigeorgiev.com/pocketbase/discussions?category=Bugs).
 
 ## License
 

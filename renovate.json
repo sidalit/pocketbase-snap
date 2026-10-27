@@ -5,7 +5,8 @@
   "packageRules": [
     {
       "matchDepNames": ["upstream"],
-      "overridePackageName": "pocketbase/pocketbase"
+      "overrideDatasource": "git-tags",
+      "overridePackageName": "https://ganigeorgiev.com/git/pocketbase/pocketbase"
     }
   ]
 }
