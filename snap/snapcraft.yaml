@@ -1,6 +1,6 @@
 name: pocketbase
 base: core26
-version: '0.41.1'
+version: '0.42.2'
 title: PocketBase
 icon: snap/gui/pocketbase.png
 summary: Backend with an embedded database, authentication and file storage
